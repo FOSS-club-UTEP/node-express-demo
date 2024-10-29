@@ -15,6 +15,14 @@ app.get('/about', (req, res) => {
     res.sendFile(path.join(__dirname, '../static/about.html'))
 })
 
+app.get('/api/sampledata', (req, res) => {
+    const now = new Date();
+    res.send({
+        currentDate: now.toISOString().split('T')[0],
+        currentTime: now.toTimeString().split(' ')[0]
+    });
+})
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
