@@ -26,11 +26,19 @@ app.get('/api/sampledata', (req, res) => {
 })
 
 app.get('/joke', async (req, res) => {
-    const response = await fetch("https://v2.jokeapi.dev/joke/Any");
-    const joke_data = await response.json();
-    const joke_text = joke_data.setup + " " + joke_data.delivery;
+    const result = await fetch("https://v2.jokeapi.dev/joke/Any");
+    const jokedata = await result.json();
 
-    res.render(path.join(__dirname, '../static/joke.html'), { joke: joke_text });
+    console.log(jokedata);
+
+    let joke = "";
+    if (jokedata.joke) {
+        joke = jokedata.joke;
+    } else {
+        joke = jokedata.setup + " " + jokedata.delivery;
+    }
+
+    res.render(path.join(__dirname, "../static/joke.html"), { "joke": joke });
 })
 
 app.listen(port, () => {
